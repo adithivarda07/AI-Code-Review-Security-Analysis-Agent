@@ -214,12 +214,5 @@ Project screenshots will be added during subsequent milestones.
 
 **Adithi Varda**
 
-B.Tech – Information Technology
 
-Infosys Springboard Virtual Internship 7.0
 
----
-
-# 📄 License
-
-This project is developed for educational purposes as part of the **Infosys Springboard Virtual Internship 7.0**.
