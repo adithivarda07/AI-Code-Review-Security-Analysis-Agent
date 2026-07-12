@@ -1,94 +1,80 @@
-# 🤖 AI Code Review & Security Analysis Agent
+# AI Code Review & Security Analysis Agent
 
-> AI-powered static code review and secure coding assistant for Python and Java.
-
-![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
-![Streamlit](https://img.shields.io/badge/Streamlit-Framework-red?logo=streamlit)
-![LangChain](https://img.shields.io/badge/LangChain-RAG-green)
-![FAISS](https://img.shields.io/badge/FAISS-Vector%20Store-orange)
-![Status](https://img.shields.io/badge/Status-Phase%201%20Completed-success)
+AI-powered static code review and security analysis tool for Python and Java, developed as part of the **Infosys Springboard Virtual Internship 7.0**.
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
-The **AI Code Review & Security Analysis Agent** is being developed as part of the **Infosys Springboard Virtual Internship 7.0**.
+The AI Code Review & Security Analysis Agent is designed to assist developers in identifying code quality issues and common security vulnerabilities through automated static analysis.
 
-The objective of this project is to build an intelligent assistant capable of reviewing source code, detecting security vulnerabilities, recommending secure coding practices, and leveraging Retrieval-Augmented Generation (RAG) to provide context-aware guidance from trusted security documentation.
-
-Currently, the application performs static analysis for Python and Java programs and lays the foundation for an AI-powered secure code review platform.
+The project currently supports Python and Java source code analysis and includes a structured secure coding knowledge base. Future enhancements will integrate Retrieval-Augmented Generation (RAG) to provide context-aware security recommendations using trusted secure coding resources.
 
 ---
 
-## 🎯 Objectives
+## Features
 
-- Perform automated static code analysis
-- Detect common coding issues
-- Identify basic security vulnerabilities
-- Provide an overall code quality score
-- Generate concise review summaries
-- Build a secure coding knowledge base
-- Integrate Retrieval-Augmented Generation (RAG) for intelligent recommendations
-
----
-
-# ✨ Current Features (Phase 1)
-
-### 📂 Code Input
-- Upload Python (.py) and Java (.java) source files
+- Upload Python (`.py`) and Java (`.java`) source files
 - Paste source code directly into the application
-
-### 🔍 Language Detection
-- Automatic detection of:
-  - Python
-  - Java
-
-### ✅ Syntax Validation
-- Python syntax validation using Python AST
-- Java file recognition
-
-### 📊 Code Quality Analysis
-- Detects debug print statements
-- Detects TODO comments
-- Detects oversized source files
-- Detects presence of comments
-
-### 🔒 Security Analysis
-- Hardcoded password detection
-- Detects usage of eval()
-- Detects usage of exec()
-- Detects SQL queries requiring parameterized execution
-
-### 📈 Review Report
-- Code Quality Score
-- Security Findings
-- Review Summary
-- Submitted Code Viewer
+- Automatic language detection
+- Python syntax validation using Abstract Syntax Tree (AST)
+- Static code quality analysis
+- Basic security vulnerability detection
+- Code quality scoring
+- Review summary generation
+- View submitted source code after analysis
 
 ---
 
-# 🧠 Knowledge Base
+## Supported Languages
 
-The project includes a structured secure coding knowledge base containing industry-standard references.
+- Python
+- Java
+
+---
+
+## Security Checks
+
+The current implementation detects:
+
+- Hardcoded passwords
+- Usage of `eval()`
+- Usage of `exec()`
+- SQL query identification
+- Debug print statements
+- TODO comments
+- Large source files
+- Presence of comments
+
+---
+
+## Knowledge Base
+
+The secure coding knowledge base currently includes documentation from:
 
 ### OWASP
+
 - OWASP Top 10 (2021)
-- OWASP Developer Guide
 - OWASP Secure Coding Practices
+- OWASP Developer Guide
 
 ### Python
+
 - Python Security Considerations
 - Python Secure Coding Guide
 
 ### Java
-- Oracle Secure Coding Guidelines
+
+- Oracle Java Secure Coding Guidelines
 - Java Code Conventions
+
+These resources form the foundation for the upcoming Retrieval-Augmented Generation (RAG) pipeline.
 
 ---
 
-# 📁 Project Structure
+## Project Structure
 
-```
+```text
 AI-Code-Review-Security-Analysis-Agent
 │
 ├── knowledge_base/
@@ -110,93 +96,66 @@ AI-Code-Review-Security-Analysis-Agent
 ├── reports/
 ├── screenshots/
 ├── app.py
-└── test_loader.py
+├── test_loader.py
+└── .gitignore
 ```
 
 ---
 
-# 🛠️ Tech Stack
+## Technology Stack
 
 - Python
 - Streamlit
 - LangChain
-- FAISS (Planned)
-- Google Gemini API (Planned)
+- AST (Python Standard Library)
+- PDF Document Loader
+- HTML Document Loader
 
 ---
 
-# 🚀 RAG Pipeline (In Progress)
+## Current Implementation
 
-The Retrieval-Augmented Generation pipeline is being implemented with the following workflow:
+The current implementation includes:
 
-```
-Knowledge Base
-      │
-      ▼
-Document Loader
-      │
-      ▼
-Chunking
-      │
-      ▼
-Embedding Generation
-      │
-      ▼
-Vector Database (FAISS)
-      │
-      ▼
-Retriever
-      │
-      ▼
-Gemini LLM
-      │
-      ▼
-AI Security Recommendations
-```
+- Streamlit-based user interface
+- Modular code architecture
+- Static code quality analysis
+- Security vulnerability detection
+- Python syntax validation
+- Secure coding knowledge base
+- PDF and HTML document loading for RAG preparation
+
+Future development will focus on:
+
+- Document chunking
+- Embedding generation
+- Vector database integration
+- Retrieval-Augmented Generation (RAG)
+- AI-powered security recommendations
 
 ---
 
-# 📌 Current Progress
+## Getting Started
 
-| Module | Status |
-|---------|--------|
-| Streamlit Interface | ✅ Completed |
-| File Upload | ✅ Completed |
-| Language Detection | ✅ Completed |
-| Python Syntax Validation | ✅ Completed |
-| Static Code Analysis | ✅ Completed |
-| Security Analysis | ✅ Completed |
-| Modular Architecture | ✅ Completed |
-| Knowledge Base | ✅ Completed |
-| Document Loader | ✅ Completed |
-| RAG Chunking | 🚧 In Progress |
-| Embeddings | 🚧 In Progress |
-| Vector Database | 🚧 In Progress |
-| Gemini Integration | 🚧 Planned |
-
----
-
-# ▶️ Running the Project
-
-Clone the repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/adithivarda07/AI-Code-Review-Security-Analysis-Agent.git
 ```
 
-Navigate into the project
+### Navigate to the project
 
 ```bash
 cd AI-Code-Review-Security-Analysis-Agent
 ```
 
-Install dependencies
+### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the Streamlit application
+### Run the application
 
 ```bash
 streamlit run app.py
@@ -204,15 +163,14 @@ streamlit run app.py
 
 ---
 
-# 📷 Screenshots
-
-Project screenshots will be added during subsequent milestones.
-
----
-
-# 👩‍💻 Developer
+## Developer
 
 **Adithi Varda**
 
+B.Tech – Information Technology
+
+G. Narayanamma Institute of Technology & Science (GNITS)
+
+Infosys Springboard Virtual Internship 7.0
 
 
