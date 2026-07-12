@@ -167,10 +167,6 @@ streamlit run app.py
 
 **Adithi Varda**
 
-B.Tech – Information Technology
 
-G. Narayanamma Institute of Technology & Science (GNITS)
-
-Infosys Springboard Virtual Internship 7.0
 
 
