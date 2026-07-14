@@ -1,14 +1,16 @@
 # AI Code Review & Security Analysis Agent
 
-AI-powered static code review and security analysis tool for Python and Java, developed as part of the **Infosys Springboard Virtual Internship 7.0**.
+An AI-powered static code review and security analysis tool developed as part of the **Infosys Springboard Virtual Internship 7.0**.
+
+The application analyzes Python and Java source code for syntax errors, code quality issues, and common security vulnerabilities. It also includes a Retrieval-Augmented Generation (RAG) knowledge pipeline built from secure coding standards and best practice documents.
 
 ---
 
 ## Project Overview
 
-The AI Code Review & Security Analysis Agent is designed to assist developers in identifying code quality issues and common security vulnerabilities through automated static analysis.
+The objective of this project is to assist developers by performing automated code reviews and security analysis while leveraging trusted secure coding documentation for future AI-assisted recommendations.
 
-The project currently supports Python and Java source code analysis and includes a structured secure coding knowledge base. Future enhancements will integrate Retrieval-Augmented Generation (RAG) to provide context-aware security recommendations using trusted secure coding resources.
+The project combines static code analysis with a RAG pipeline that prepares OWASP, Oracle Java, and Python security documentation for semantic retrieval.
 
 ---
 
@@ -17,12 +19,13 @@ The project currently supports Python and Java source code analysis and includes
 - Upload Python (`.py`) and Java (`.java`) source files
 - Paste source code directly into the application
 - Automatic language detection
-- Python syntax validation using Abstract Syntax Tree (AST)
+- Python syntax validation using AST
 - Static code quality analysis
 - Basic security vulnerability detection
 - Code quality scoring
-- Review summary generation
-- View submitted source code after analysis
+- Code review summary generation
+- Secure coding knowledge base
+- RAG document indexing pipeline
 
 ---
 
@@ -35,7 +38,7 @@ The project currently supports Python and Java source code analysis and includes
 
 ## Security Checks
 
-The current implementation detects:
+Current implementation detects:
 
 - Hardcoded passwords
 - Usage of `eval()`
@@ -44,13 +47,13 @@ The current implementation detects:
 - Debug print statements
 - TODO comments
 - Large source files
-- Presence of comments
+- Missing or limited comments
 
 ---
 
-## Knowledge Base
+## Secure Coding Knowledge Base
 
-The secure coding knowledge base currently includes documentation from:
+The knowledge base includes trusted secure coding resources from:
 
 ### OWASP
 
@@ -68,7 +71,54 @@ The secure coding knowledge base currently includes documentation from:
 - Oracle Java Secure Coding Guidelines
 - Java Code Conventions
 
-These resources form the foundation for the upcoming Retrieval-Augmented Generation (RAG) pipeline.
+These documents are processed through the RAG pipeline for semantic search.
+
+---
+
+## System Architecture
+
+```text
+                         +----------------------+
+                         |     Streamlit UI     |
+                         +----------+-----------+
+                                    |
+                     Upload File / Paste Source Code
+                                    |
+                                    ▼
+                     +---------------------------+
+                     |     Code Processing       |
+                     +------------+--------------+
+                                  |
+        +-------------------------+-------------------------+
+        |                         |                         |
+        ▼                         ▼                         ▼
++----------------+      +----------------+      +----------------+
+|   Validator    |      | Code Analysis  |      | Security Check |
++----------------+      +----------------+      +----------------+
+        |                         |                         |
+        +-------------------------+-------------------------+
+                                  |
+                                  ▼
+                      Code Review & Security Report
+
+────────────────────────────────────────────────────────────
+
+                 Secure Coding Knowledge Base
+
+      PDF / HTML Documents
+               │
+               ▼
+        Document Loader
+               │
+               ▼
+      Document Chunking
+               │
+               ▼
+   Embedding Generation
+               │
+               ▼
+      FAISS Vector Store
+```
 
 ---
 
@@ -97,7 +147,10 @@ AI-Code-Review-Security-Analysis-Agent
 ├── screenshots/
 ├── app.py
 ├── test_loader.py
-└── .gitignore
+├── test_chunker.py
+├── test_embedder.py
+├── test_vector_store.py
+└── requirements.txt
 ```
 
 ---
@@ -107,55 +160,56 @@ AI-Code-Review-Security-Analysis-Agent
 - Python
 - Streamlit
 - LangChain
+- Hugging Face Embeddings
+- Sentence Transformers
+- FAISS
 - AST (Python Standard Library)
-- PDF Document Loader
-- HTML Document Loader
 
 ---
 
-## Current Implementation
+## RAG Pipeline
 
-The current implementation includes:
+The secure coding knowledge base is processed using the following pipeline:
 
-- Streamlit-based user interface
-- Modular code architecture
-- Static code quality analysis
-- Security vulnerability detection
-- Python syntax validation
-- Secure coding knowledge base
-- PDF and HTML document loading for RAG preparation
-
-Future development will focus on:
-
-- Document chunking
-- Embedding generation
-- Vector database integration
-- Retrieval-Augmented Generation (RAG)
-- AI-powered security recommendations
+```text
+Knowledge Base
+      │
+      ▼
+Document Loader
+      │
+      ▼
+Document Chunker
+      │
+      ▼
+Embedding Generation
+      │
+      ▼
+FAISS Vector Store
+```
 
 ---
 
-## Getting Started
+## Installation
 
-### Clone the repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/adithivarda07/AI-Code-Review-Security-Analysis-Agent.git
 ```
 
-### Navigate to the project
+Move into the project directory:
 
 ```bash
 cd AI-Code-Review-Security-Analysis-Agent
 ```
 
-### Install dependencies
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Run the application
+Run the application:
 
 ```bash
 streamlit run app.py
@@ -166,7 +220,4 @@ streamlit run app.py
 ## Developer
 
 **Adithi Varda**
-
-
-
 
