@@ -14,3 +14,5 @@ reports/
 # OS files
 .DS_Store
 Thumbs.db
+
+vector_db/
