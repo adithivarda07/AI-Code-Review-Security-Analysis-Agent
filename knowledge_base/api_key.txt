@@ -1,0 +1,35 @@
+API Keys
+
+Definition
+API keys are unique credentials used to authenticate applications when accessing external APIs and cloud services.
+
+Why is it dangerous?
+Hardcoding API keys in source code exposes sensitive credentials.
+If the source code is leaked or pushed to GitHub, attackers can misuse the API key.
+
+Common Risks
+- Unauthorized API access
+- Data theft
+- Increased cloud service costs
+- Account compromise
+
+Best Practices
+- Store API keys in environment variables.
+- Use secret management services.
+- Rotate API keys regularly.
+- Never commit API keys to public repositories.
+
+Example
+
+Bad:
+api_key = "AIzaSyABC123"
+
+Good:
+import os
+api_key = os.getenv("API_KEY")
+
+Severity
+High
+
+Reference
+OWASP Secure Coding Practices

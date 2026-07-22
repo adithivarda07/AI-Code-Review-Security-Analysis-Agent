@@ -1,0 +1,23 @@
+Debug Print Statements
+
+Definition
+Debug print statements are temporary messages used during development.
+
+Example
+
+print("Debug")
+
+Problems
+- Clutters logs
+- Exposes internal information
+- Reduces code quality
+
+Best Practices
+- Remove debug statements before deployment.
+- Use logging frameworks instead.
+
+Severity
+Low
+
+Reference
+Python Logging Documentation

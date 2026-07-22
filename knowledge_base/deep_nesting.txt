@@ -1,0 +1,29 @@
+Deep Nesting
+
+Definition
+Deep nesting occurs when multiple if, for, while, or switch statements are nested.
+
+Problems
+- Difficult to understand
+- High cyclomatic complexity
+- Hard to debug
+- Difficult to maintain
+
+Example
+
+Bad:
+if():
+    if():
+        if():
+            if():
+
+Better:
+Use helper methods.
+Use early returns.
+Split logic into smaller functions.
+
+Severity
+Medium
+
+Reference
+Clean Code

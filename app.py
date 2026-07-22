@@ -1,8 +1,13 @@
 import streamlit as st
+if "analysis_done" not in st.session_state:
+    st.session_state.analysis_done = False
 import time
 from modules.validator import detect_language,validate_python
 from modules.analysis import code_analysis
 from modules.security import security_review
+from modules.report import generate_report
+from modules.remediation import get_remediation
+from modules.rag_assistant import ask_assistant
 
 # ---------------------------------------------------
 # PAGE CONFIGURATION
@@ -224,7 +229,7 @@ with col2:
 # ANALYSIS
 # ---------------------------------------------------
 
-if analyze:
+if analyze or st.session_state.analysis_done:
 
     if uploaded_file is not None:
         code = uploaded_file.read().decode("utf-8")
@@ -271,6 +276,7 @@ if analyze:
         progress.empty()
 
         st.success("✅ Analysis completed successfully!")
+        st.session_state.analysis_done = True
 
         st.divider()
 
@@ -297,6 +303,9 @@ if analyze:
         analysis_findings, analysis_score, analysis_summary = code_analysis(code)
 
         score -= analysis_score
+        score = max(score, 0)
+
+        st.markdown("### 📋 Code Analysis Findings")
 
         for level, message in analysis_findings:
 
@@ -306,37 +315,40 @@ if analyze:
             elif level == "success":
                 st.success(message)
 
+        st.divider()       
+
         # ---------------------------------------------------
         # SECURITY REVIEW
         # ---------------------------------------------------
 
-        st.markdown("### 🔒 Security Review")
-
         security_findings, security_score, security_summary = security_review(code)
 
         score -= security_score
+
+        st.markdown("### 🔒 Security Findings")
 
         for level, message in security_findings:
 
             if level == "error":
                 st.error(message)
 
+            elif level == "warning":
+                st.warning(message)
+
             elif level == "info":
                 st.info(message)
-
-        if len(security_findings) == 0:
-            st.success("✔ No obvious security issues detected.")
-
+       
+       
         # ---------------------------------------------------
         # OVERALL CODE QUALITY
         # ---------------------------------------------------
 
         st.markdown("### ⭐ Overall Code Quality")
 
-        if score >= 90:
+        if score >= 85:
             st.success(f"Excellent ({score}/100)")
 
-        elif score >= 70:
+        elif score >= 60:
             st.warning(f"Good ({score}/100)")
 
         else:
@@ -356,6 +368,232 @@ if analyze:
         else:
             for item in summary:
                 st.write(item)
+                                
+        st.markdown("### 🤖 Remediation Suggestions")
+        shown = set()
+
+        for _, message in analysis_findings + security_findings:
+
+            issue = None
+
+            if "Magic number" in message:
+                issue = "Magic number"
+
+            elif "password" in message.lower():
+                issue = "Hardcoded password"
+
+            elif "api key" in message.lower():
+                issue = "API key"
+
+            elif "TODO" in message:
+                issue = "TODO"
+
+            elif "Debug print" in message.lower():
+                issue = "Debug print"
+
+            elif "Deep nesting" in message:
+                issue = "Deep nesting"
+
+            if issue and issue not in shown:
+                  shown.add(issue)
+                  fix = get_remediation(issue)
+                 
+                  if fix is not None:
+
+                    with st.expander(f"🔧 {issue}"):
+
+                        st.write(f"**Severity:** {fix.get('severity', 'N/A')}")
+                        st.write(f"**Why:** {fix.get('why', 'N/A')}")
+                        st.write(f"**Recommendation:** {fix.get('recommendation', 'N/A')}")
+
+                        st.code(fix.get("example", "No example available."))
+            
+        st.divider()
+                
+        # ---------------------------------------------------
+        # PR SUMMARY AGENT
+        # ---------------------------------------------------
+
+        st.markdown("### 📄 Pull Request Review")
+
+        # Review Status
+        if score >= 90:
+            status = "✅ APPROVED"
+        elif score >= 70:
+            status = "🟡 APPROVED WITH SUGGESTIONS"
+        else:
+            status = "🔴 CHANGES REQUESTED"
+
+        # Severity Counts
+        high = 0
+        medium = 0
+        low = 0
+
+        for _, message in security_findings:
+            msg = message.lower()
+
+            if "password" in msg or "api key" in msg:
+                high += 1
+
+            elif "sql" in msg:
+                medium += 1
+
+        for _, message in analysis_findings:
+            msg = message.lower()
+
+            if "deep nesting" in msg:
+                medium += 1
+
+            elif (
+                "todo" in msg
+                or "debug" in msg
+                or "magic number" in msg
+                or "tabs" in msg
+            ):
+                low += 1
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric("🔴 High", high)
+        col2.metric("🟡 Medium", medium)
+        col3.metric("🟢 Low", low)
+
+        st.write(f"**Review Status:** {status}")
+        st.write(f"**Code Quality Score:** {score}/100")
+
+        if status == "🔴 CHANGES REQUESTED":
+            st.error(
+                "The submitted code contains high-priority security vulnerabilities and code quality issues. Address these findings before approving or merging this pull request."
+            )
+
+        elif status == "🟡 APPROVED WITH SUGGESTIONS":
+            st.warning(
+                "The pull request can be merged after addressing the recommended improvements."
+            )
+
+        else:
+            st.success(
+                "The pull request is ready for approval."
+            )
+
+        st.divider()
+        
+        
+        # ---------------------------------------------------
+        # CONVERSATIONAL CODE ASSISTANT
+        # ---------------------------------------------------
+
+        st.markdown("### 💬 🤖 AI Code Review Assistant")
+
+        st.caption(
+            "Ask questions about secure coding, vulnerabilities, code quality, or best practices."
+        )
+
+        # Chat history
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+
+        # Input Box
+        question = st.text_input(
+            "Ask your question",
+            placeholder="Example: How can I avoid hardcoded passwords?"
+        )
+
+        # Buttons
+        col1, col2 = st.columns(2)
+
+        with col2:
+            ask = st.button(
+                "🚀 Ask AI",
+                use_container_width=True
+            )
+
+        with col3:
+            clear = st.button(
+                "🗑 Clear",
+                use_container_width=True
+            )
+
+        if clear:
+            st.session_state.messages = []
+            st.rerun()
+
+        # AI Response
+        if ask:
+
+            if question.strip():
+
+                # Save User Question
+                st.session_state.messages.append(
+                    {
+                        "role": "user",
+                        "content": question
+                    }
+                )
+
+                with st.spinner("🤖 AI is thinking..."):
+
+                    try:
+                        answer = ask_assistant(question)
+
+                    except Exception as e:
+                        answer = f"❌ {e}"
+
+                # Save AI Response
+                st.session_state.messages.append(
+                    {
+                        "role": "assistant",
+                        "content": answer
+                    }
+                )
+
+            else:
+                st.warning("⚠ Please enter a question.")
+
+        # Chat History
+        if st.session_state.messages:
+
+            st.markdown("---")
+
+            for message in st.session_state.messages:
+
+                if message["role"] == "user":
+
+                    with st.container(border=True):
+
+                        st.markdown("#### 👤 You")
+                        st.write(message["content"])
+
+                else:
+
+                    with st.container(border=True):
+
+                        st.markdown("#### 🤖 AI Assistant")
+                        st.write(message["content"])
+
+        st.divider()
+
+        
+                      
+        # ---------------------------------------------------
+        # GENERATE REPORT
+        # ---------------------------------------------------
+
+        report = generate_report(
+            file_name,
+            file_type,
+            analysis_findings,
+            security_findings,
+            summary,
+            score
+        )
+
+        st.download_button(
+            label="📥 Download AI Code Review Report",
+            data=report,
+            file_name="AI_Code_Review_Report.txt",
+            mime="text/plain"
+        )
 
         # ---------------------------------------------------
         # VIEW SUBMITTED CODE
@@ -372,3 +610,4 @@ st.divider()
 st.caption(
     "© 2026 | AI Code Review & Security Analysis Agent | Infosys Springboard Virtual Internship 7.0"
 )
+

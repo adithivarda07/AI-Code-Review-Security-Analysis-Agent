@@ -15,4 +15,7 @@ reports/
 .DS_Store
 Thumbs.db
 
-vector_db/
+
+
+# Environment Variables
+.env

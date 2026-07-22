@@ -1,0 +1,24 @@
+Secure Coding Guidelines
+
+Secure coding is the practice of writing software that protects against security vulnerabilities.
+
+Key Principles
+- Validate all user input.
+- Use parameterized SQL queries.
+- Never hardcode credentials.
+- Use HTTPS for communication.
+- Follow the Principle of Least Privilege.
+- Sanitize output.
+- Keep dependencies updated.
+- Handle exceptions securely.
+- Encrypt sensitive data.
+- Follow OWASP Secure Coding Practices.
+
+Benefits
+- Improved application security
+- Reduced vulnerabilities
+- Better maintainability
+- Compliance with industry standards
+
+Reference
+OWASP Secure Coding Practices

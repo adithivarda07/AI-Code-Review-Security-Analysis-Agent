@@ -2,7 +2,8 @@ from pathlib import Path
 
 from langchain_community.document_loaders import (
     PyPDFLoader,
-    BSHTMLLoader
+    BSHTMLLoader,
+     TextLoader
 )
 
 
@@ -33,5 +34,14 @@ def load_documents():
             except Exception as e:
 
                 print(f"Skipped {file.name}: {e}")
+                
+        elif file.suffix.lower() == ".txt":
+
+            loader = TextLoader(
+                str(file),
+                encoding="utf-8"
+            )
+
+            documents.extend(loader.load())
 
     return documents

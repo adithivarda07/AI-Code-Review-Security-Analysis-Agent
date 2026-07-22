@@ -1,0 +1,23 @@
+TODO Comments
+
+Definition
+TODO comments indicate unfinished work.
+
+Example
+
+# TODO: Validate input
+
+Problems
+- Incomplete functionality
+- Forgotten tasks
+- Technical debt
+
+Best Practices
+- Complete TODO items before production.
+- Remove obsolete TODO comments.
+
+Severity
+Low
+
+Reference
+Software Engineering Best Practices

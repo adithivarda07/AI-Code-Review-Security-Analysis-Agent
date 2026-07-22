@@ -1,0 +1,29 @@
+Magic Numbers
+
+Definition
+Magic numbers are numeric literals used directly in code without explanation.
+
+Example
+
+Bad:
+if marks >= 75:
+
+Good:
+PASS_MARK = 75
+
+if marks >= PASS_MARK:
+
+Problems
+- Poor readability
+- Difficult maintenance
+- Easy to introduce bugs
+
+Best Practices
+- Use named constants.
+- Define configuration values in one place.
+
+Severity
+Low
+
+Reference
+Clean Code Principles
