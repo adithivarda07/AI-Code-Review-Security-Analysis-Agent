@@ -1,215 +1,281 @@
-# AI Code Review & Security Analysis Agent
+# 🤖 AI Code Review & Security Analysis Agent
 
-An AI-powered static code review and security analysis tool developed as part of the **Infosys Springboard Virtual Internship 7.0**.
+An AI-powered **Multi-Agent Code Review and Security Analysis Platform** developed as part of the **Infosys Springboard Virtual Internship 7.0**.
 
-The application analyzes Python and Java source code for syntax errors, code quality issues, and common security vulnerabilities. It also includes a Retrieval-Augmented Generation (RAG) knowledge pipeline built from secure coding standards and best practice documents.
-
----
-
-## Project Overview
-
-The objective of this project is to assist developers by performing automated code reviews and security analysis while leveraging trusted secure coding documentation for future AI-assisted recommendations.
-
-The project combines static code analysis with a RAG pipeline that prepares OWASP, Oracle Java, and Python security documentation for semantic retrieval.
+The application automatically analyzes **Python** and **Java** source code to identify code quality issues and security vulnerabilities, provides remediation suggestions, generates pull request summaries, exports review reports, and includes a **RAG-powered AI Assistant** for secure coding guidance.
 
 ---
 
-## Features
+# 📌 Project Overview
 
-- Upload Python (`.py`) and Java (`.java`) source files
-- Paste source code directly into the application
+Manual code reviews are often time-consuming, inconsistent, and unable to detect security vulnerabilities early in the software development lifecycle.
+
+The **AI Code Review & Security Analysis Agent** automates this process through a **multi-agent architecture** where specialized agents collaborate to analyze code, detect vulnerabilities, recommend fixes, generate review summaries, and answer developer queries using a **Retrieval-Augmented Generation (RAG)** pipeline.
+
+---
+
+# ✨ Features
+
+## 📂 Code Submission Module
+
+- Upload Python (.py) and Java (.java) source files
+- Paste source code directly
 - Automatic language detection
-- Python syntax validation using AST
-- Static code quality analysis
-- Basic security vulnerability detection
-- Code quality scoring
-- Code review summary generation
-- Secure coding knowledge base
-- RAG document indexing pipeline
+- Python syntax validation
 
 ---
 
-## Supported Languages
+## 🔍 Code Analysis Agent
 
-- Python
-- Java
+Detects:
 
----
-
-## Security Checks
-
-Current implementation detects:
-
-- Hardcoded passwords
-- Usage of `eval()`
-- Usage of `exec()`
-- SQL query identification
-- Debug print statements
 - TODO comments
+- Debug print statements
+- Magic numbers
+- Deep nesting
+- Long functions
 - Large source files
-- Missing or limited comments
+- Trailing whitespace
+- Tabs and formatting issues
+
+Generates an overall **Code Quality Score**.
 
 ---
 
-## Secure Coding Knowledge Base
+## 🔒 Security Vulnerability Agent
 
-The knowledge base includes trusted secure coding resources from:
+Detects:
 
-### OWASP
+- Hardcoded Passwords
+- API Keys
+- Secrets
+- Tokens
+- SQL Injection patterns
+- eval() usage
+- exec() usage
 
-- OWASP Top 10 (2021)
-- OWASP Secure Coding Practices
-- OWASP Developer Guide
-
-### Python
-
-- Python Security Considerations
-- Python Secure Coding Guide
-
-### Java
-
-- Oracle Java Secure Coding Guidelines
-- Java Code Conventions
-
-These documents are processed through the RAG pipeline for semantic search.
+Provides severity-based findings.
 
 ---
 
-## System Architecture
+## 🛠 Remediation Agent
+
+Provides:
+
+- Severity level
+- Issue explanation
+- Best practice recommendation
+- Corrected code examples
+
+---
+
+## 📄 Pull Request Summary Agent
+
+Generates:
+
+- High / Medium / Low issue count
+- Pull Request Review Summary
+- Merge recommendation
+- Code Quality Score
+
+---
+
+## 🤖 AI Code Review Assistant
+
+Powered by:
+
+- Retrieval-Augmented Generation (RAG)
+- FAISS Vector Database
+- Groq LLM
+
+Allows developers to ask questions related to:
+
+- Secure coding
+- Security vulnerabilities
+- Code quality
+- Best coding practices
+
+---
+
+## 📥 Report Generation
+
+Generate downloadable reports containing:
+
+- Code Analysis Findings
+- Security Findings
+- Review Summary
+- Overall Code Quality Score
+
+---
+
+# 🛠 Technology Stack
+
+| Category | Technologies |
+|----------|--------------|
+| Programming Language | Python |
+| Frontend | Streamlit |
+| AI Framework | LangChain |
+| Embeddings | Hugging Face Sentence Transformers |
+| Vector Database | FAISS |
+| LLM | Groq (Llama 3.3) |
+| Parsing | AST |
+| Architecture | Multi-Agent + RAG |
+
+---
+
+# 🏗 System Architecture
 
 ```text
-                         +----------------------+
-                         |     Streamlit UI     |
-                         +----------+-----------+
-                                    |
-                     Upload File / Paste Source Code
-                                    |
-                                    ▼
-                     +---------------------------+
-                     |     Code Processing       |
-                     +------------+--------------+
-                                  |
-        +-------------------------+-------------------------+
-        |                         |                         |
-        ▼                         ▼                         ▼
-+----------------+      +----------------+      +----------------+
-|   Validator    |      | Code Analysis  |      | Security Check |
-+----------------+      +----------------+      +----------------+
-        |                         |                         |
-        +-------------------------+-------------------------+
-                                  |
-                                  ▼
-                      Code Review & Security Report
-
-────────────────────────────────────────────────────────────
-
-                 Secure Coding Knowledge Base
-
-      PDF / HTML Documents
-               │
-               ▼
-        Document Loader
-               │
-               ▼
-      Document Chunking
-               │
-               ▼
-   Embedding Generation
-               │
-               ▼
-      FAISS Vector Store
+                    User Uploads Code
+                           │
+                           ▼
+                Code Submission Module
+                           │
+                           ▼
+                 Language Detection
+                           │
+                           ▼
+                 Syntax Validation
+                           │
+          ┌────────────────┴─────────────────┐
+          ▼                                  ▼
+ Code Analysis Agent        Security Vulnerability Agent
+          │                                  │
+          └───────────────┬──────────────────┘
+                          ▼
+                 Remediation Agent
+                          ▼
+              Pull Request Summary Agent
+                          ▼
+                Report Generation Module
+                          ▼
+               AI Code Review Assistant
+                          │
+                          ▼
+                 FAISS Retriever (RAG)
+                          │
+                          ▼
+           Secure Coding Knowledge Base
+                          │
+                          ▼
+                      Groq LLM
+                          │
+                          ▼
+                 AI Generated Response
 ```
 
 ---
 
-## Project Structure
+# 📂 Project Structure
 
 ```text
 AI-Code-Review-Security-Analysis-Agent
 │
 ├── knowledge_base/
-│   ├── java/
-│   ├── owasp/
-│   └── python/
 │
 ├── modules/
 │   ├── analysis.py
 │   ├── security.py
-│   └── validator.py
+│   ├── validator.py
+│   ├── remediation.py
+│   ├── report.py
+│   ├── prompt_builder.py
+│   └── rag_assistant.py
 │
 ├── rag/
 │   ├── loader.py
 │   ├── chunker.py
 │   ├── embedder.py
+│   ├── retriever.py
 │   └── vector_store.py
 │
-├── reports/
+├── vector_db/
 ├── screenshots/
 ├── app.py
-├── test_loader.py
-├── test_chunker.py
-├── test_embedder.py
-├── test_vector_store.py
-└── requirements.txt
+├── build_vector_db.py
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-## Technology Stack
+# 📚 Secure Coding Knowledge Base
 
-- Python
-- Streamlit
-- LangChain
-- Hugging Face Embeddings
-- Sentence Transformers
-- FAISS
-- AST (Python Standard Library)
+The RAG pipeline indexes trusted secure coding resources including:
+
+- OWASP Secure Coding Practices
+- OWASP Top 10
+- Oracle Java Secure Coding Guidelines
+- Python Secure Coding Guidelines
+- Custom Secure Coding Documents
 
 ---
 
-## RAG Pipeline
-
-The secure coding knowledge base is processed using the following pipeline:
+# 🔄 RAG Pipeline
 
 ```text
 Knowledge Base
-      │
-      ▼
+       │
+       ▼
 Document Loader
-      │
-      ▼
+       │
+       ▼
 Document Chunker
-      │
-      ▼
+       │
+       ▼
 Embedding Generation
-      │
-      ▼
+       │
+       ▼
 FAISS Vector Store
+       │
+       ▼
+Retriever
+       │
+       ▼
+Prompt Builder
+       │
+       ▼
+Groq LLM
+       │
+       ▼
+AI Response
 ```
 
 ---
 
-## Installation
+# 🎯 Project Outcomes
 
-Clone the repository:
+- Automated static code review for Python and Java.
+- Detection of code quality issues and security vulnerabilities.
+- Severity-based findings with remediation suggestions.
+- AI-generated Pull Request review summary.
+- RAG-powered conversational AI assistant.
+- Downloadable code review reports.
+
+---
+
+# 🚀 Installation
+
+### Clone the repository
 
 ```bash
 git clone https://github.com/adithivarda07/AI-Code-Review-Security-Analysis-Agent.git
 ```
 
-Move into the project directory:
+### Navigate to the project
 
 ```bash
 cd AI-Code-Review-Security-Analysis-Agent
 ```
 
-Install dependencies:
+### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the application:
+### Run the application
 
 ```bash
 streamlit run app.py
@@ -217,7 +283,40 @@ streamlit run app.py
 
 ---
 
-## Developer
+# 📸 Screenshots
+
+## 🏠 Home Page
+
+![Home Page](screenshots/home_page.png)
+
+---
+
+## 📊 Analysis Report
+
+![Analysis Report](screenshots/analysis_report.png)
+
+---
+
+## 🔒 Security Findings
+
+![Security Findings](screenshots/security_findings.png)
+
+---
+
+## 🛠 Remediation Suggestions & Pull Request Review
+
+![Remediation](screenshots/remediation_and_prsummary.png)
+
+---
+
+## 🤖 AI Code Review Assistant
+
+![AI Assistant](screenshots/ai_assistant.png)
+
+---
+
+# 👩‍💻 Developer
 
 **Adithi Varda**
+
 
