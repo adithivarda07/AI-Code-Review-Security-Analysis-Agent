@@ -114,7 +114,7 @@ with st.sidebar:
 
     st.divider()
 
-    st.caption("Milestone 1")
+    st.caption("Milestone 2")
 
 # ---------------------------------------------------
 # HEADER
