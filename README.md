@@ -317,9 +317,9 @@ streamlit run app.py
 
 # 📑 Project Documents
 
-- 📋 [Agile Project Workbook](documents/Agile_Template_v0.1.xls)
-- ✅ [Unit Test Plan](documents/Unit_Test_Plan_v0.1.xlsx)
-- 🐞 [Defect Tracker](documents/Defect_Tracker_Template_v0.1.xlsx)
+- 📋 [Agile Project Workbook](documents_/Agile_Template_v0.1.xls)
+- ✅ [Unit Test Plan](documents_/Unit_Test_Plan_v0.1.xlsx)
+- 🐞 [Defect Tracker](documents_/Defect_Tracker_Template_v0.1.xlsx)
   
 ---
 
